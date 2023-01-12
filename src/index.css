@@ -1,4 +1,33 @@
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
+  margin: 0 auto;
+}
+
+.SeaBattle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.board {
+  border-collapse: collapse;
+  margin: 20px;
+}
+
+.board td {
+  width: 40px;
+  height: 40px;
+  border: 1px solid black;
+  text-align: center;
+  font-size: 0.75rem;
+  opacity: 0.5;
+}
+
+.hit {
+  background-color: red;
+}
+
+.miss {
+  background-color: gray;
 }

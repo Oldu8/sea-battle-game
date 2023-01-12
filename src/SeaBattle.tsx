@@ -1,48 +1,41 @@
 import React, { useState } from "react";
-import "./SeaBattle.css";
+import { Coordinate, Location } from "./interfaces";
+import { ShipsCreator } from "./modules/ShipsCreator";
 
-interface Ship {
-  x: number;
-  y: number;
-  size: number;
-  horizontal: boolean;
-}
-
-interface BoardState {
-  ships: Ship[];
-  hits: { x: number; y: number }[];
-  misses: { x: number; y: number }[];
-}
+const createShips = new ShipsCreator();
 
 const SeaBattle: React.FC = () => {
-  const [board, setBoard] = useState<BoardState>({
-    ships: [],
-    hits: [],
-    misses: [],
-  });
+  const [hitLocation, setHitLocation] = useState([]);
+  const [missedLocation, setMissedLocation] = useState([]);
 
-  function myHandleClick(board: BoardState, x: number, y: number) {
-    console.log("click" + x + y);
-    const id = x.toString() + y.toString();
-    console.log(id);
-    const tag = document.getElementById(id)?.classList.add("hit");
+  function addLocation(coordinate: Coordinate) {
+    console.log(coordinate);
+    for (let ship of createShips.ships) {
+      if (ship.location.includes(coordinate)) {
+        setHitLocation([...hitLocation, coordinate]);
+        return;
+      }
+    }
+    setMissedLocation([...missedLocation, coordinate]);
   }
 
-  const renderBoard = (board: BoardState) => {
-    const { ships, hits, misses } = board;
-
+  const renderBoard = () => {
     const rows = [];
     for (let y = 0; y < 10; y++) {
       const cells = [];
       for (let x = 0; x < 10; x++) {
-        let cell = <div className="cell"></div>;
+        const id: Coordinate = `${x + 1}-${y + 1}`;
+        const isHit = hitLocation.includes(id);
+        const isMiss = missedLocation.includes(id);
+        const className = `cell ${isHit ? "hit" : ""} ${isMiss ? "miss" : ""}`;
         cells.push(
           <td
-            id={`${x}${y}`}
+            id={id}
             key={x}
-            onClick={() => myHandleClick(board, x, y)}
+            onClick={() => addLocation(id)}
+            className={className}
           >
-            {cell}
+            {id}
           </td>
         );
       }
@@ -58,8 +51,7 @@ const SeaBattle: React.FC = () => {
 
   return (
     <div className="SeaBattle">
-      <button onClick={() => console.log("Create ships")}>Place Ships</button>
-      <div>{renderBoard(board)}</div>
+      <div>{renderBoard()}</div>
     </div>
   );
 };
