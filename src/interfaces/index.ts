@@ -1,6 +1,9 @@
 export type Coordinate = `${number}-${number}`;
-// 1-1
+
 export type Location = Coordinate[];
+export interface IshipsTypeCount {
+  [key: number]: number;
+}
 
 export interface IShip {
   location: Location;

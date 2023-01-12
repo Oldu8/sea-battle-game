@@ -1,4 +1,10 @@
-import { IShip, IShipCreator, Location, Coordinate } from "../interfaces";
+import {
+  IShip,
+  IShipCreator,
+  Location,
+  Coordinate,
+  IshipsTypeCount,
+} from "../interfaces";
 import { BOARD_SIZE, range } from "../utils";
 
 class Ship implements IShip {
@@ -21,7 +27,7 @@ export class ShipsCreator implements IShipCreator {
   }
 
   generateShips() {
-    const shipsTypeCount = {
+    const shipsTypeCount: IshipsTypeCount = {
       1: 4, // single ship
       2: 3, // double ship
       3: 2, // triple ship
