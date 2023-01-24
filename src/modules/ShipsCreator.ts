@@ -67,7 +67,7 @@ export class ShipsCreator implements IShipCreator {
   //@ts-ignore
   checkCollision({ ships, ship }) {
     if (!ships.length) return false;
-    const shipsPlaces = ships.reduce((acc: number[], item: IShip) => {
+    const shipsPlaces: Location = ships.reduce((acc: Location, item: IShip) => {
       return [...acc, ...item.location];
     }, []);
 
