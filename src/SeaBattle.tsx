@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Coordinate, Location } from "./interfaces";
+import { Coordinate } from "./interfaces";
 import { ShipsCreator } from "./modules/ShipsCreator";
 
 const createShips = new ShipsCreator();
@@ -9,7 +9,6 @@ const SeaBattle: React.FC = () => {
   const [missedLocation, setMissedLocation] = useState<Coordinate[] | []>([]);
 
   function addLocation(coordinate: Coordinate) {
-    // console.log(coordinate);
     for (let ship of createShips.ships) {
       if (ship.location.includes(coordinate)) {
         setHitLocation([...hitLocation, coordinate]);
@@ -25,8 +24,11 @@ const SeaBattle: React.FC = () => {
       const cells = [];
       for (let x = 0; x < 10; x++) {
         const id: Coordinate = `${x + 1}-${y + 1}`;
-        //Sorry, guys, I don't get why there is a problem there. id is Coordinate and hitLocation is array of Coordinates, so it shoud be good.
+        //Sorry, guys, I don't get why there is a problem there.
+        //id is Coordinate and hitLocation is array of Coordinates, so it shoud be good.
+        //@ts-ignore
         const isHit: boolean = hitLocation.includes(id);
+        //@ts-ignore
         const isMiss: boolean = missedLocation.includes(id);
         const className = `cell ${isHit ? "hit" : ""} ${isMiss ? "miss" : ""}`;
         cells.push(

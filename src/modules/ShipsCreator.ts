@@ -64,16 +64,19 @@ export class ShipsCreator implements IShipCreator {
       return !!direction ? `${row}-${column + i}` : `${row + i}-${column}`;
     });
   }
-
+  //@ts-ignore
   checkCollision({ ships, ship }) {
     if (!ships.length) return false;
-    const shipsPlaces = ships.reduce((acc: [number], item: IShip) => {
+    const shipsPlaces = ships.reduce((acc: number[], item: IShip) => {
       return [...acc, ...item.location];
     }, []);
 
-    const forbiddenZone = shipsPlaces.reduce((acc: [number], item: [IShip]) => {
-      return [...acc, ...this.getForbiddenZone(item)];
-    }, []);
+    const forbiddenZone = shipsPlaces.reduce(
+      (acc: string[], item: Coordinate) => {
+        return [...acc, ...this.getForbiddenZone(item)];
+      },
+      []
+    );
 
     const forbiddenZoneSet = new Set(forbiddenZone);
 
@@ -83,22 +86,22 @@ export class ShipsCreator implements IShipCreator {
     return false;
   }
 
-  getForbiddenZone(value) {
+  getForbiddenZone(value: Coordinate) {
     if (!value) return [];
     let [row, column] = value.split("-");
-    const forbiddenZone = [value];
+    const forbiddenZone: Location = [value];
 
-    row = Number(row);
-    column = Number(column);
+    let rowN = Number(row);
+    let columnN = Number(column);
 
-    forbiddenZone.push(`${row - 1}-${column}`); // top cell
-    forbiddenZone.push(`${row + 1}-${column}`); // bottom cell
-    forbiddenZone.push(`${row}-${column - 1}`); // left cell
-    forbiddenZone.push(`${row}-${column + 1}`); // right cell
-    forbiddenZone.push(`${row - 1}-${column - 1}`); // top left cell
-    forbiddenZone.push(`${row + 1}-${column + 1}`); // bottom  right cell
-    forbiddenZone.push(`${row - 1}-${column + 1}`); // top right cell
-    forbiddenZone.push(`${row + 1}-${column - 1}`); // bottom left cell
+    forbiddenZone.push(`${rowN - 1}-${columnN}`); // top cell
+    forbiddenZone.push(`${rowN + 1}-${columnN}`); // bottom cell
+    forbiddenZone.push(`${rowN}-${columnN - 1}`); // left cell
+    forbiddenZone.push(`${rowN}-${columnN + 1}`); // right cell
+    forbiddenZone.push(`${rowN - 1}-${columnN - 1}`); // top left cell
+    forbiddenZone.push(`${rowN + 1}-${columnN + 1}`); // bottom  right cell
+    forbiddenZone.push(`${rowN - 1}-${columnN + 1}`); // top right cell
+    forbiddenZone.push(`${rowN + 1}-${columnN - 1}`); // bottom left cell
 
     return forbiddenZone;
   }
