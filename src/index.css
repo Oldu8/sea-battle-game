@@ -1,7 +1,19 @@
-:root {
+body {
+  background-color: rgba(79, 0, 169, 0.244);
+}
+#root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
-  margin: 0 auto;
+  margin: 0rem auto;
+}
+.content {
+  margin: 6rem auto;
+  border-radius: 25px;
+  padding: 1rem;
+  border: 2.5px solid pink;
+  box-shadow: 20px 20px 15px rgb(111, 193, 209);
+  max-width: 60vw;
+  background-color: white;
 }
 
 .SeaBattle {
@@ -30,4 +42,10 @@
 
 .miss {
   background-color: gray;
+}
+
+h2 {
+  text-align: center;
+  font-weight: bold;
+  font-size: 2.5rem;
 }
